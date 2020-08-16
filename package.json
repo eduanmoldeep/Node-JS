@@ -1,0 +1,22 @@
+{
+  "name": "node-js",
+  "version": "1.0.0",
+  "description": "Journey to NodeJS Learning Journey",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Anmoldeep1509/Node-JS.git"
+  },
+  "author": "Anmoldeep Singh Arora",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Anmoldeep1509/Node-JS/issues"
+  },
+  "homepage": "https://github.com/Anmoldeep1509/Node-JS#readme",
+  "dependencies": {
+    "learnyounode": "^4.2.2"
+  }
+}
