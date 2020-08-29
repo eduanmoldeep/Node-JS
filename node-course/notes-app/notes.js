@@ -43,21 +43,21 @@ const removeNote = function (title) {
     // const notes = loadNotes()
 
     console.log(title);
+    
+    const newList = notes.filter(function (note) {
+        return note.title !== title
+    })
 
-    // const newList = notes.filter(function (note) {
-    //     return note.title !== title
-    // })
-
-    // if (notes.length !== newList.length) {
+    if (notes.length !== newList.length) {
         
-    //     console.log(newList);
+        console.log(newList);
 
-    //     saveNotes(newList)
-    //     console.log('Note deleted!');
+        saveNotes(newList)
+        console.log('Note deleted!');
 
-    // } else {
-    //     console.log('Note Title do not exist, Try Another!');
-    // }
+    } else {
+        console.log('Note Title do not exist, Try Another!');
+    }
 }
 
 
