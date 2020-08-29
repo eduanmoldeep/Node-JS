@@ -44,15 +44,15 @@ const removeNote = function (title) {
 
     console.log(title);
     
-    const newList = notes.filter(function (note) {
+    const notesToKeep = notes.filter(function (note) {
         return note.title !== title
     })
 
-    if (notes.length !== newList.length) {
+    if (notes.length !== notesToKeep.length) {
         
-        console.log(newList);
+        console.log(notesToKeep);
 
-        saveNotes(newList)
+        saveNotes(notesToKeep)
         console.log('Note deleted!');
 
     } else {
