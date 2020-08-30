@@ -1,17 +1,18 @@
 const fs = require('fs')
+const chalk = require('chalk')
 
-const getNotes = function () {
-    return 'Your Notes...'
-}
+const getNotes = () => 'Your Notes...'
 
-const addNote = function (title, body) {
+const addNote = (title, body) => {
 
     const notes = loadNotes()
-    const duplicateNotes = notes.filter(function (note) {
-        return note.title === title
-    })
+    // const duplicateNotes = notes.filter((note) => note.title === title)
+    const duplicateNote = notes.find((note) => note.title === title)
 
-    if (duplicateNotes.length === 0) {
+
+    // debugger
+    // if (duplicateNote === undefined) {
+    if (!duplicateNote) {
         notes.push({
             title: title,
             body: body
@@ -19,50 +20,65 @@ const addNote = function (title, body) {
         console.log(notes);
 
         saveNotes(notes)
-        console.log('New Note added!');
+        console.log(chalk.bgGreen.black('New Note added!'));
 
     } else {
-        console.log('Note Title Taken, Try Another!');
+        console.log(chalk.bgRed('Note Title Taken, Try Another!'));
     }
-
-
-
-
 }
 
-// possible mistake is improper type conversions, 
-// make sure to implement defence mechanisms that avoid
-// writing onto unexpected data
-const saveNotes = function (notes) {
-    const dataJSON = JSON.stringify(notes)
-    fs.writeFileSync('notes.json', dataJSON)
+// read a note from given title
+const readNote = (title) => {
+    const notes = loadNotes()
+    const showNote = notes.find((note) => note.title === title) 
+
+    if(showNote) {
+        console.log(chalk.green.inverse(showNote.title) + ' : ' + chalk.green(showNote.body));
+    } else {
+        console.log(chalk.red.inverse('Note not found!'));
+    }
+}
+
+// listing all the available notes
+const listNotes = () => {
+    const notes = loadNotes()
+
+    console.log(chalk.yellow('Your Notes:'));
+    notes.forEach(note => {
+        console.log(chalk.grey('Title: ') + chalk.green(note.title));
+    });
 }
 
 // deleting note from list
-const removeNote = function (title) {
-    // const notes = loadNotes()
-
-    console.log(title);
+const removeNote = (title) => {
+    const notes = loadNotes()
+    // console.log(title);
     
-    const notesToKeep = notes.filter(function (note) {
-        return note.title !== title
-    })
+    const notesToKeep = notes.filter( (note) => note.title !== title)
 
-    if (notes.length !== notesToKeep.length) {
+    if (notes.length > notesToKeep.length) {
         
         console.log(notesToKeep);
 
         saveNotes(notesToKeep)
-        console.log('Note deleted!');
+        console.log(chalk.bgGreen.black('Note deleted!'));
 
     } else {
-        console.log('Note Title do not exist, Try Another!');
+        console.log(chalk.bgRed('Note Title not found , Try Another!'));
     }
 }
 
 
 
-const loadNotes = function () {
+// possible mistake is improper type conversions, 
+// make sure to implement defence mechanisms that avoid
+// writing onto unexpected data
+const saveNotes = (notes) => {
+    const dataJSON = JSON.stringify(notes)
+    fs.writeFileSync('notes.json', dataJSON)
+}
+
+const loadNotes = () => {
 
     try {
         const dataBuffer = fs.readFileSync('notes.json')
@@ -77,5 +93,7 @@ const loadNotes = function () {
 module.exports = {
     getNotes: getNotes,
     addNote: addNote,
-    removeNote: removeNote
+    removeNote: removeNote,
+    listNotes: listNotes,
+    readNote: readNote
 }
